@@ -1,0 +1,21 @@
+1963. Minimum Number of Swaps to Make the String Balanced
+
+class Solution {
+public:
+    int minSwaps(string s) {
+        if(s.empty()) return 0;
+        int stale = 0;
+        stack<char> st;
+        for(int i =0;i<(int)s.size();i++){
+            if(s[i] == '[') st.push('[');
+            else{
+                if(st.empty()) stale++;
+                else st.pop();
+            }
+        }
+        stale += st.size();
+        int ans = stale/4;
+        if(stale %4 != 0) ans++;
+        return ans;
+    }
+};

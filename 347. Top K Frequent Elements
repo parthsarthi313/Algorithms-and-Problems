@@ -1,0 +1,28 @@
+347. Top K Frequent Elements
+
+class compare {
+    public:
+        bool operator()(pair<int,int> p1,pair<int,int> p2){
+            return p1.second > p2.second;
+        }
+};
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        priority_queue<pair<int,int>,vector<pair<int,int>>,compare> pq;
+        map<int,int> mp;
+        for(int i =0;i<(int)nums.size();i++){
+            mp[nums[i]]++;
+        }
+        for(auto it : mp){
+            pq.push({it.first,it.second});
+            if(pq.size() > k) pq.pop();
+        }
+        vector<int> ans;
+        while(!pq.empty()){
+            ans.push_back(pq.top().first);
+            pq.pop();
+        }
+        return ans;
+    }
+};
