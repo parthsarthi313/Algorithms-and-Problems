@@ -1,0 +1,29 @@
+15. 3Sum
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        set<vector<int>> se;
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
+        for(int i =0;i<n;i++){
+            int low = i+1,high = n-1;
+            while(low < high && low <= n-1 && high >= 0){
+                if(nums[i] + nums[low] + nums[high] == 0){
+                    vector<int> v;
+                    se.insert({nums[i],nums[low],nums[high]});
+                    low++,high--;
+                }
+                else if(nums[low] + nums[high] < -1 * nums[i]){
+                    low++;
+                }
+                else high--;
+            }
+        }
+        vector<vector<int>> ans;
+        for(auto it : se){
+            ans.push_back(it);
+        }
+        return ans;
+    }
+};

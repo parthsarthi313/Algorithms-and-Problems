@@ -1,0 +1,24 @@
+22. Generate Parentheses
+
+class Solution {
+public:
+    void insertPar(vector<string> &v,int lp,int rp,int n, string s){
+        if(lp > n || rp > n) return;
+        if(lp == n && rp == n){
+            v.push_back(s);
+            cout << s << endl;
+            return;
+        }
+        if(lp == n){
+            insertPar(v,lp,rp+1,n,s + ")");
+            return;
+        }
+        if(lp > rp) insertPar(v,lp,rp+1,n,s + ")");
+        insertPar(v,lp+1,rp,n,s + "(");
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string> v;
+        insertPar(v,0,0,n,"");
+        return v;
+    }
+};

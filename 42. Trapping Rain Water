@@ -1,0 +1,24 @@
+42. Trapping Rain Water
+
+class Solution {
+public:
+    int trap(vector<int>& h) {
+        int n = h.size();
+        int ans = 0;
+        int low = 0,high = n-1;
+        int lmax = h[low],rmax = h[high];
+        while(low < high){
+            if(lmax < rmax){
+                ans += max(0,lmax - h[low]);
+                low++;
+                lmax = max(lmax,h[low]);
+            }
+            else{
+                ans += max(0,rmax - h[high]);
+                high--;
+                rmax = max(rmax,h[high]);
+            }
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,29 @@
+1942. The Number of the Smallest Unoccupied Chair
+
+class Solution {
+public:
+    int smallestChair(vector<vector<int>>& times, int target) {
+        int startTime = times[target][0];
+        sort(times.begin(),times.end());
+        int n = times.size();
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        priority_queue<int,vector<int>,greater<int>> chairs;
+        for(int i =0;i<n;i++){
+            if(times[i][0] == startTime) target = i;
+            chairs.push(i);
+        }
+        for(int i =0;i<n;i++){
+            int start = times[i][0];
+            int end = times[i][1];
+            while(!pq.empty() && pq.top().first <= start){
+                int chair = pq.top().second;
+                chairs.push(chair);
+                pq.pop();
+            }
+            if(i == target) return chairs.top();
+            pq.push({end,chairs.top()});
+            chairs.pop();
+        }
+        return -1;
+    }
+};

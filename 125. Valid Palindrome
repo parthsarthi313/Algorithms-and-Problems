@@ -1,0 +1,26 @@
+125. Valid Palindrome
+
+class Solution {
+public:
+    bool checkPalindrome(string s) {
+        int low = 0;
+        int high = s.size() - 1;
+        while (low < high) {
+            if (s[low] != s[high])
+                return false;
+            low++, high--;
+        }
+        return true;
+    }
+    bool isPalindrome(string s) {
+        int lowerstart = 'a', lowerend = 'a' + 26;
+        int upperstart = 'A', upperend = 'A' + 26;
+        int n = s.size();
+        string ans = "";
+        for (int i = 0; i < n; i++) {
+            if (isalnum(s[i]))
+            ans += tolower(s[i]);
+        }
+        return checkPalindrome(ans);
+    }
+};
