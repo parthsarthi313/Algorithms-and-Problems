@@ -1,0 +1,31 @@
+2406. Divide Intervals Into Minimum Number of Groups
+
+class Solution {
+public:
+    int minGroups(vector<vector<int>>& intervals) {
+        int ans = 0;
+        int n = intervals.size();
+        vector<int> starts(n),ends(n);
+        for(int i =0;i<n;i++){
+            starts[i] = intervals[i][0];
+            ends[i] = intervals[i][1];
+        }
+        sort(starts.begin(),starts.end());
+        sort(ends.begin(),ends.end());
+        int s =0,e=0;
+        int group = 0;
+        while(s < n){
+            if(starts[s] <= ends[e]){
+                group++;
+                ans = max(ans,group);
+                s++;
+            }
+            else{
+                group--;
+                ans = max(ans,group);
+                e++;
+            }
+        }
+        return ans;
+    }
+};
