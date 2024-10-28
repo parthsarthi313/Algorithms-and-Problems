@@ -1,0 +1,38 @@
+680. Valid Palindrome II
+
+class Solution {
+public:
+    bool isPalindrome(string s){
+        int n = s.size();
+        int low = 0,high = n-1;
+        while(low < high){
+            if(s[low] != s[high]) return false;
+            low++,high--;
+        }
+        return true;
+    }
+    bool validPalindrome(string s) {
+        int flg = false;
+        int low = 0, high = s.size()-1;
+        int ind1 = -1,ind2 = -1;
+        while(low < high){
+            if(s[low] != s[high]){
+                ind1 = low;
+                ind2 = high;
+                break;
+            }
+            low++,high--;
+        }
+        string temp1 = s;
+        string temp2 = s;
+        bool pal1 = true, pal2 = true;
+        if(ind1 != -1){
+            temp1.erase(temp1.begin()+ind1);
+            pal1 = isPalindrome(temp1);
+            temp2.erase(temp2.begin()+ind2);
+            pal2 = isPalindrome(temp2);
+        }
+        if(!pal1 && !pal2) return false;
+        return true;
+    }
+};
