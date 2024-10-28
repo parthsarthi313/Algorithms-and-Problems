@@ -1,0 +1,28 @@
+2501. Longest Square Streak in an Array
+
+class Solution {
+public:
+    int longestSquareStreak(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> vis(100005,-1);
+        sort(nums.begin(),nums.end());
+        map<long long,long long> mp;
+        for(int i =0;i<n;i++){
+            mp[nums[i]]++;
+        }
+        int ans = -1;
+        for(int i =0;i<n;i++){
+            if(vis[nums[i]] != -1) continue;
+            vis[nums[i]] = 1;
+            int curr = 0;
+            long long currnum = nums[i];
+            while(mp.count(currnum * currnum) != 0){
+                curr++;
+                vis[currnum] = 1;
+                currnum = currnum*currnum;
+            }
+            if(curr > 0) ans = max(ans,curr+1);
+        }
+        return ans;
+    }
+};
