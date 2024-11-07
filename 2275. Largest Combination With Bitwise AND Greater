@@ -1,0 +1,26 @@
+2275. Largest Combination With Bitwise AND Greater Than Zero
+
+class Solution {
+public:
+    void fillMap(int num, map<int,int> &mp) {
+        int pos = 0;
+        while(num > 0) {
+            mp[pos] += num &1;
+            num = num >> 1;
+            pos++;
+        }
+    }
+    int largestCombination(vector<int>& candidates) {
+        int n = candidates.size();
+        map<int,int> mp;
+        for(int i =0;i<n;i++){
+            fillMap(candidates[i],mp);
+        }
+        int ans = 0;
+        for(auto it : mp) {
+            cout << it.second << endl;
+            ans = max(ans,it.second);
+        }
+        return ans;
+    }
+};

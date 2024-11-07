@@ -1,0 +1,22 @@
+3330. Find the Original Typed String I
+
+class Solution {
+public:
+    int possibleStringCount(string word) {
+        map<char,int> mp;
+        int n = word.size();
+        char curr = word[0];
+        int cnt = 1;
+        int ans = 0;
+        for(int i =1;i<n;i++){
+            if(word[i] == curr) cnt++;
+            else{
+                ans += (cnt-1);
+                curr = word[i];
+                cnt = 1;
+            }
+        }
+        ans += cnt;
+        return ans;
+    }
+};
