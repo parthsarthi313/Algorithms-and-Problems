@@ -1,0 +1,43 @@
+1829. Maximum XOR for Each Query
+
+class Solution {
+public:
+    int convert(vector<int> v) {
+        int ans = 0;
+        int n = v.size();
+        for(int i =0;i<n;i++) {
+            if(v[i] == 1) ans += pow(2,i);
+        }
+        return ans;
+    }
+    vector<int> getMaximumXor(vector<int>& nums, int bit) {
+       int n = nums.size();
+       vector<int> ans;
+        map<int,int> mp;
+        for(int i=0;i<bit;i++){
+            for(int j =0;j<n;j++) {
+                if((nums[j] >> i) & 1) mp[i] += 1;
+            } 
+        }
+        int temp = n;
+        while(temp--) {
+            vector<int> curr;
+            for(int i =0;i<bit;i++){
+                if(mp[i] %2 == 0) curr.push_back(1);
+                else curr.push_back(0);
+            }
+            int val = convert(curr);
+            ans.push_back(val);
+            int currSize = nums.size();
+            int lastDig = nums[currSize-1];
+            nums.pop_back();
+            int x = 0;
+            while(lastDig) {
+                if(lastDig & 1) mp[x]--;
+                lastDig = lastDig >> 1;
+                x++;
+            }          
+        }
+        return ans;
+    }
+};
