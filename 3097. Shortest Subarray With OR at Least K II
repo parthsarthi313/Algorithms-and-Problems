@@ -1,0 +1,55 @@
+3097. Shortest Subarray With OR at Least K II
+
+class Solution {
+public:
+    void addValue(vector<int> &bits,int num) {
+        int i = 0;
+        while(num) {
+            if(num & 1) bits[i]++;
+            num = num >> 1;
+            i++;
+        }
+    }
+
+    void removeVal(vector<int> &bits, int num) {
+        int i =0;
+        while(num) {
+            if(num & 1) bits[i]--;
+            num = num >> 1;
+            i++;
+        }
+    }
+
+    int getValue(vector<int> &bits) {
+        int ans = 0;
+        for(int i =0;i<32;i++) {
+            if(bits[i] > 0)
+            ans += pow(2,i);
+        }
+        return ans;
+    }
+
+    int minimumSubarrayLength(vector<int>& nums, int k) {
+        int n = nums.size();
+        int right =0,left = 0;
+        int curr = 0;
+        int ans = INT_MAX;
+        vector<int> bits(32);
+        while(right < n) {
+            curr |= nums[right];
+            addValue(bits,nums[right]);
+            if(curr >= k) {
+                ans = min(ans,right-left+1);
+                while(curr >= k && left < right) {
+                    removeVal(bits,nums[left]);
+                    left++;
+                    int value = getValue(bits);
+                    if(value >= k) ans = min(ans,right-left+1);
+                    curr = value;
+                }
+            }
+            right++;
+        }
+        return ans == INT_MAX ? -1 :ans;
+    }
+};
