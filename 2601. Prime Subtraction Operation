@@ -1,0 +1,29 @@
+2601. Prime Subtraction Operation
+
+class Solution {
+public:
+    bool primeSubOperation(vector<int>& nums) {
+        int n = nums.size();
+        vector<bool> primes(10001,true);
+        for(int i =2;i*i<=10001;i++) {
+            if(primes[i] == true) {
+                for(int j = i*i;j<=10001;j += i) {
+                    primes[j] = false;
+                }
+            }
+        }
+        set<int> st;
+        for(int i =2;i<=10001;i++) {
+            if(primes[i]) st.insert(i);
+        }
+        for(int i = n-1;i>=1;i--) {
+            if(nums[i] > nums[i-1]) continue;
+            int diff = nums[i-1] - nums[i];
+            auto it = st.upper_bound(diff);
+            int justGreater = *it;
+            if(justGreater >= nums[i-1]) return false;
+            nums[i-1] -= justGreater;
+        }
+        return true;
+    }
+};
