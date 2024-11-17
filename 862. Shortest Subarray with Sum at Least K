@@ -1,0 +1,26 @@
+862. Shortest Subarray with Sum at Least K
+
+class Solution {
+public:
+    int shortestSubarray(vector<int>& nums, int k) {
+        int n = nums.size();
+        long long currsum = 0;
+        deque<pair<long long,long long>> dq;
+        int ans = INT_MAX;
+        for(int i =0;i<n;i++) {
+            currsum += nums[i];
+            if(currsum >= k) ans = min(ans,i+1);
+            while(!dq.empty() && currsum - dq.front().first >= k) {
+                int ind = dq.front().second;
+                dq.pop_front();
+                ans = min(ans,i-ind);
+            }
+            while(!dq.empty() && dq.back().first > currsum) {
+                dq.pop_back();
+            }
+            dq.push_back({currsum,i});
+        }
+        if(ans == INT_MAX) return -1;
+        return ans;
+    }
+};
