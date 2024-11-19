@@ -1,0 +1,35 @@
+3011. Find if Array Can Be Sorted
+
+class Solution {
+public:
+    bool canSortArray(vector<int>& nums) {
+       int n = nums.size();
+       deque<pair<int,set<int>>> st;
+       for(int i =0;i<n;i++) {
+            int ones = __builtin_popcount(nums[i]);
+            if(!st.empty() && st.back().first == ones) {
+                pair<int,set<int>> curr = st.back();
+                set<int> currset = curr.second;
+                st.pop_back();
+                currset.insert(nums[i]);
+                st.push_back({curr.first,currset});
+            }
+            else{
+                set<int> curr;
+                curr.insert(nums[i]);
+                st.push_back({ones,curr});
+            }
+       }
+       int currnum = -1;
+       while(!st.empty()) {
+            set<int> curr = st.front().second;
+            st.pop_front();
+            for(auto it : curr) {
+                cout << it << endl;
+                if(currnum > it) return false;
+                currnum = it;
+            }
+       }
+       return true;
+    }
+};
